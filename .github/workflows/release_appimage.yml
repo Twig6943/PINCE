@@ -1,10 +1,7 @@
 name: Release AppImage
 
 on:
-  push:
-    tags:
-      - "v*.*"
-      - "v*.*.*"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,8 +15,9 @@ jobs:
         run: |
             export ARCH=x86_64
             ./ci/package.sh
-      - name: Release
-        uses: softprops/action-gh-release@v2
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          make_latest: true
-          files: ci/PINCE-x86_64.AppImage
+          name: appimage
+          path: ci/PINCE-x86_64.AppImage
